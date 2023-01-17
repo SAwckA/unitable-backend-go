@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+
+
+  mongodb:
+    image: mongo:5.0
+
+    ports:
+      - "27017:27017"
+    
+    volumes:
+      - ./mongodata:/data/db
+
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=testuser
+      - MONGO_INITDB_ROOT_PASSWORD=123
+
+
+  session_storage:
+    image: "redis:alpine"
+
+    command: redis-server --requirepass qwerty
+
+    ports:
+      - "6379:6379"
+
+    volumes:
+      - ./redis-data:/var/lib/redis
+
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
