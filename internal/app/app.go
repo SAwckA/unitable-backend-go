@@ -13,7 +13,8 @@ import (
 // Такое кто-то считает нужным, кто-то считает бесполезным
 func Run() error {
 
-	mongoStorage, err := mongodb.NewMongoStorage()
+	//TODO: Конфиги везде
+	mongoStorage, err := mongodb.NewMongoStorage("unitable")
 	redisStorage, err := red.NewRedisStorage()
 
 	services := service.NewServices(mongoStorage, redisStorage)

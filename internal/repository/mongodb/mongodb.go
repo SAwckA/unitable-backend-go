@@ -6,11 +6,11 @@ type MongoStorage struct {
 	AuthStorage *AuthStorage
 }
 
-func NewMongoStorage() (*MongoStorage, error) {
+func NewMongoStorage(databaseName string) (*MongoStorage, error) {
 	client, err := repository.NewMongoClient()
-
+	db := client.Database(databaseName)
 	return &MongoStorage{
-		AuthStorage: NewAuthStorage(client),
+		AuthStorage: NewAuthStorage(db, "users"),
 		//TODO: Остальные хранилища
 	}, err
 }

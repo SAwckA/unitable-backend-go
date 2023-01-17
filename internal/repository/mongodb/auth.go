@@ -3,9 +3,10 @@ package mongodb
 import "go.mongodb.org/mongo-driver/mongo"
 
 type AuthStorage struct {
-	cl *mongo.Client
+	db *mongo.Collection
 }
 
-func NewAuthStorage(cl *mongo.Client) *AuthStorage {
-	return &AuthStorage{cl: cl}
+func NewAuthStorage(db *mongo.Database, collectionName string) *AuthStorage {
+	collection := db.Collection(collectionName)
+	return &AuthStorage{db: collection}
 }
