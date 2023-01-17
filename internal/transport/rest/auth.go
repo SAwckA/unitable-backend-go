@@ -1,8 +1,15 @@
 package rest
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 type authService interface {
+	CreateUser(username, email, password string) string, error
+	GetUserIDByUsernamePassword(username string, password string) (string, error)
+	GenerateSID(userId string) (string, bool)
+	GetUserIdBySID(sid string) (string, error)
+	DeleteSIDPair(id string) bool
 }
 
 type authHandler struct {

@@ -12,6 +12,6 @@ type Services struct {
 
 func NewServices(storage *mongodb.MongoStorage, sessionStorage *red.RedisStorage) *Services {
 	return &Services{
-		AuthService: NewAuthService(storage, sessionStorage),
+		AuthService: NewAuthService(storage.AuthStorage, &sessionStorage.SessionStorage),
 	}
 }

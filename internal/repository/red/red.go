@@ -2,15 +2,13 @@ package red
 
 import (
 	"unitable/internal/repository"
-
-	"github.com/go-redis/redis/v8"
 )
 
 type RedisStorage struct {
-	client *redis.Client
+	SessionStorage SessionStorage
 }
 
 func NewRedisStorage() (*RedisStorage, error) {
 	client, err := repository.NewRedisClient()
-	return &RedisStorage{client: client}, err
+	return &RedisStorage{*NewSessionStorage(client)}, err
 }

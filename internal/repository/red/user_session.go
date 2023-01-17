@@ -10,3 +10,7 @@ func NewSessionStorage(client *redis.Client) *SessionStorage {
 
 	return &SessionStorage{client: client}
 }
+
+func (repo *SessionStorage) SaveSIDPair(sid string, userID string) error
+func (repo *SessionStorage) DeleteSIDPair(sid string) error
+func (repo *SessionStorage) GetUserIdBySID(sid string) (string, error)
