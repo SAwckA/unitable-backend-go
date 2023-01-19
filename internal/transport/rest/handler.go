@@ -32,6 +32,21 @@ func (h *HTTPHandler) InitRoutes() *gin.Engine {
 		auth.GET("verify", authHandler.VerifyUser)
 	}
 
+	// TODO:
+	// Управление профилем:
+	// 					   Изменение (имя)
+	// 					   Контакты:
+	// 					   			POST   Добавление контакта
+	//								PATCH  Изменение контакта
+	//								DELETE Удаление контакта
+	profileEdit := router.Group("/profile", middlewareHandler.SIDAuth)
+	{
+		profileEdit.PATCH("edit")
+		profileEdit.POST("contacts")
+		profileEdit.PATCH("contacts")
+		profileEdit.DELETE("contacts")
+	}
+
 	// Пример аутентификации и авторизации
 	// router.GET("/protected", middlewareHandler.SIDAuth, middlewareHandler.CheckActivatedUser, middlewareHandler.CheckVerifiedUser)
 
