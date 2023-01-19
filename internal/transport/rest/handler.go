@@ -41,10 +41,22 @@ func (h *HTTPHandler) InitRoutes() *gin.Engine {
 	//								DELETE Удаление контакта
 	profileEdit := router.Group("/profile", middlewareHandler.SIDAuth)
 	{
+		// Профиль
 		profileEdit.PATCH("edit")
+
+		// Контакты
 		profileEdit.POST("contacts")
 		profileEdit.PATCH("contacts")
 		profileEdit.DELETE("contacts")
+	}
+
+	// TODO:
+	// Просмотр профиля всеми пользователями
+	// Поиск профиля
+	profilePublic := router.Group("/profile/")
+	{
+		profilePublic.GET("/:id")
+		profilePublic.GET("/search")
 	}
 
 	// Пример аутентификации и авторизации
