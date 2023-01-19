@@ -9,6 +9,7 @@ type RedisStorage struct {
 }
 
 func NewRedisStorage() (*RedisStorage, error) {
+	// FIXME: Деккомпозиция зависимости
 	client, err := repository.NewRedisClient()
 	return &RedisStorage{*NewSessionStorage(client)}, err
 }

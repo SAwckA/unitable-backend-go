@@ -7,11 +7,13 @@ import (
 
 // Структура всех сервисов
 type Services struct {
-	AuthService *authService
+	AuthService    *authService
+	ProfileService *profileService
 }
 
 func NewServices(storage *mongodb.MongoStorage, sessionStorage *red.RedisStorage) *Services {
 	return &Services{
-		AuthService: NewAuthService(storage.AuthStorage, &sessionStorage.SessionStorage),
+		AuthService:    NewAuthService(storage.AuthStorage, &sessionStorage.SessionStorage),
+		ProfileService: NewProfileService(storage.ProfileStorage),
 	}
 }

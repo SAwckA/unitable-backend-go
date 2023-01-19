@@ -27,8 +27,22 @@ func (i *User) MarshalBinary() ([]byte, error) {
 }
 
 type UserProfile struct {
-	FullName string            `bson:"full_name"`
-	Contacts map[string]string `bson:"contacts"`
+	FullName string           `bson:"full_name" json:"full_name"`
+	Contacts []ProfileContact `bson:"contacts" json:"contacts"`
+}
+
+type ProfileContact struct {
+	ID    primitive.ObjectID `bson:"_id"`
+	Name  string             `bson:"name" json:"name"`
+	Value string             `bson:"value" json:"value"`
+}
+
+func NewProfileContact(name, value string) *ProfileContact {
+	return &ProfileContact{
+		ID:    primitive.NewObjectID(),
+		Name:  name,
+		Value: value,
+	}
 }
 
 func NewUser(username string, password string, email string) *User {
