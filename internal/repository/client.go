@@ -31,7 +31,7 @@ func NewRedisClient() (*redis.Client, error) {
 func NewMongoClient() (*mongo.Client, error) {
 
 	//Create Client
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://127.0.0.1:27017"))
+	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://testuser:123@127.0.0.1:27017"))
 
 	if err != nil {
 		return nil, err
