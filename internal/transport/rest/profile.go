@@ -14,6 +14,7 @@ type profileService interface {
 	AppendContact(user *domain.User, contactName string, contactValue string) error
 	EditContact(user *domain.User, contactID primitive.ObjectID, newName string, newValue string) error
 	DeleteContacts(user *domain.User, contactIDs []string) error
+	GetUserByUserID(userID string) (*domain.User, error)
 }
 
 type profileHandler struct {
@@ -95,6 +96,7 @@ func (h *profileHandler) EditContact(c *gin.Context) {
 		return
 	}
 
+	// FIXME: Перенести ObjectID в repository
 	contactID, err := primitive.ObjectIDFromHex(input.ID)
 
 	if err != nil {
@@ -136,5 +138,25 @@ func (h *profileHandler) DeleteContacts(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusNoContent, nil)
+
+}
+
+func (h *profileHandler) GetProfile(c *gin.Context) {
+
+	ID, exist := c.Params.Get("id")
+
+	if !exist {
+		newErrorResponse(c, http.StatusBadRequest, "Missing user ID")
+		return
+	}
+
+	user, err := h.service.GetUserByUserID(ID)
+
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, user.Profile)
 
 }

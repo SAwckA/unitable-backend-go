@@ -8,6 +8,7 @@ import (
 
 type profileStorage interface {
 	SaveUser(*domain.User) error
+	GetUserByUserID(userID string) (*domain.User, error)
 }
 
 type profileService struct {
@@ -65,4 +66,8 @@ func (s *profileService) DeleteContacts(user *domain.User, contactIDs []string) 
 	}
 
 	return s.repo.SaveUser(user)
+}
+
+func (s *profileService) GetUserByUserID(userID string) (*domain.User, error) {
+	return s.repo.GetUserByUserID(userID)
 }

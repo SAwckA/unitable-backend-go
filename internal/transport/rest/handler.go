@@ -55,11 +55,13 @@ func (h *HTTPHandler) InitRoutes() *gin.Engine {
 	// TODO:
 	// Просмотр профиля всеми пользователями
 	// Поиск профиля
-	// profilePublic := router.Group("/profile/")
-	// {
-	// 	profilePublic.GET("/:id")
-	// 	profilePublic.GET("/search")
-	// }
+	profilePublic := router.Group("/profile/")
+	{
+		profilePublic.GET("/:id", profileHandler.GetProfile)
+
+		// TODO: Сделать поиск пользователей по профилю и почте (необходимо будет для добавления админов журнала)
+		// profilePublic.GET("/search", emptyHandler)
+	}
 
 	// Пример аутентификации и авторизации
 	// router.GET("/protected", middlewareHandler.SIDAuth, middlewareHandler.CheckActivatedUser, middlewareHandler.CheckVerifiedUser)
