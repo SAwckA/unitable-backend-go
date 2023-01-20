@@ -14,6 +14,8 @@ import (
 func Run() error {
 
 	//TODO: Конфиги везде
+
+	// FIXME: Сначала инициализироват коннекты, потом передать в хранилища
 	mongoStorage, err := mongodb.NewMongoStorage("unitable")
 	redisStorage, err := red.NewRedisStorage()
 

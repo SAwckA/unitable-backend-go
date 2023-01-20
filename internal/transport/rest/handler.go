@@ -32,9 +32,39 @@ func (h *HTTPHandler) InitRoutes() *gin.Engine {
 		auth.GET("verify", authHandler.VerifyUser)
 	}
 
+	// TODO:
+	// Управление профилем:
+	// 					   Изменение (имя)
+	// 					   Контакты:
+	// 					   			POST   Добавление контакта
+	//								PATCH  Изменение контакта
+	//								DELETE Удаление контакта
+	profileHandler := NewProfileHandler(h.service.ProfileService)
+	profileEdit := router.Group("/profile", middlewareHandler.SIDAuth)
+	{
+		// Профиль
+		profileEdit.PUT("edit", profileHandler.SetProfile)
+
+		// Контакты
+		// FIXME: разные по смыслу HTTP методы, например POST contact(s) (но метод работает только с 1 контактом, contact(*s))
+		profileEdit.POST("contacts", profileHandler.AppendContact)
+		profileEdit.PATCH("contacts", profileHandler.EditContact)
+		profileEdit.DELETE("contacts", profileHandler.DeleteContacts)
+	}
+
+	// TODO:
+	// Просмотр профиля всеми пользователями
+	// Поиск профиля
+	profilePublic := router.Group("/profile/")
+	{
+		profilePublic.GET("/:id", profileHandler.GetProfile)
+
+		// TODO: Сделать поиск пользователей по профилю и почте (необходимо будет для добавления админов журнала)
+		// profilePublic.GET("/search", emptyHandler)
+	}
+
 	// Пример аутентификации и авторизации
 	// router.GET("/protected", middlewareHandler.SIDAuth, middlewareHandler.CheckActivatedUser, middlewareHandler.CheckVerifiedUser)
 
 	return router
-
 }
